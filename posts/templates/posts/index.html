@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load post_extras %}
+{% block content %}
+<div class="panel-group" id="accordion">
+{% for post in posts %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+		  {{ forloop.counter }}.&nbsp;<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{post.id}}"><u>{{post.title}}</u></a>
+      </h4>
+	  <h6>by {{post.user_posting.username}} {{ post.created_at|age }} </h6>
+		{% if not post.user_posting.userprofile.DoesNotExist %}
+			<h6>User Profile: Empty</h6>
+		{% else %}
+	  		<h6>Birth Date: {{post.user_posting.userprofile.date_of_birth}}&nbsp;|&nbsp;Location: {{ post.user_posting.userprofile.location }}&nbsp;|&nbsp;favorite color: {{ post.user_posting.userprofile.fav_color }}</h6>
+		{% endif %}
+    </div>
+	  
+    <div id="collapse{{post.id}}" class="panel-collapse collapse">
+      <div class="panel-body">
+		  {{post.content}}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock content %}

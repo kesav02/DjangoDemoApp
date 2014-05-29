@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+	<div class="col-sm-2"></div>
+	<div class="col-sm-10">
+		<p>Please keeping posting to <b>"The Wall"</b> web site</p>
+	</div>
+
+	
+	<form id="post-form" class="form-horizontal" role="form" method="post" action="/post/">	
+		{% csrf_token %}
+		<div class="form-group">
+			<label for="title" class="col-sm-2 control-label">Title:</label>
+			<div class="col-sm-10">
+			  <input id="title" class="form-control" maxlength="200" name="title" type="text" placeholder="Post Title">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="content" class="col-sm-2 control-label">Post Content:</label>
+			<div class="col-sm-10">
+			  <textarea class="form-control" id="content" name="content" rows="10"></textarea>
+			</div>
+		</div>		
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+			  <input type="submit" value="Submit"/>
+			</div>
+		</div>
+	</form>
+
+<script>
+(function($,W,D)
+{
+    var JQUERY4U = {};
+ 
+    JQUERY4U.UTIL =
+    {
+        setupFormValidation: function()
+        {
+            //form validation rules
+            $("#post-form").validate({
+                rules: {
+                    title: "required",
+                    content: "required"
+                },
+                messages: {
+                    title: "Please enter your post title",
+                    content: "Please enter your post content"
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        }
+    }
+ 
+    //when the dom has loaded setup form validation rules
+    $(D).ready(function($) {
+        JQUERY4U.UTIL.setupFormValidation();
+    });
+ 
+})(jQuery, window, document);
+</script>
+{% endblock content %}
